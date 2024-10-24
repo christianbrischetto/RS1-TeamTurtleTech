@@ -1,3 +1,6 @@
 # RS1-TeamTurtleTech
 
-turtlebot3_turtle_tech world and launch have to be added to the turtlebot3 sim folder
+install frontier exploration package
+git clone https://github.com/abdulkadrtr/ROS2-FrontierBaseExplorationForAutonomousRobot.git
+
+requires slam_toolbox
