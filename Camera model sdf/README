@@ -1,0 +1,32 @@
+Navigate to model.sdf file:
+/ros2_ws/src/turtlebot3_simulations/turtlebot3_gazebo/models/turtlebot3_waffle_pi/model.sdf
+
+First copy the original "model.sdf" file into another text editor. Call it "original model".
+
+replace the original "model.sdf" file with the one I have added in this folder.
+
+To make sure it i working export the waffle pi and run a world
+run ros2 topic list and it should have the depth topics
+Can also run: ros2 run rqt_image_view rqt_image_view and change the image view to the depth image
+
+
+   What was changed on the turtlebot3_waffle_pi SDF:
+
+     1) Add
+          <joint name="camera_rgb_optical_joint" type="fixed">
+            <parent>camera_rgb_frame</parent>
+            <child>camera_rgb_optical_frame</child>
+            <pose>0 0 0 -1.57079632679 0 -1.57079632679</pose>
+            <axis>
+              <xyz>0 0 1</xyz>
+            </axis>
+          </joint> 
+     2) Rename <link name="camera_rgb_frame"> to <link name="camera_rgb_optical_frame">
+     3) Add <link name="camera_rgb_frame"/>
+     4) Change <sensor name="camera" type="camera"> to <sensor name="camera" type="depth">
+     5) Change image width/height from 1920x1080 to 640x480
+     6) Note that we can increase min scan range from 0.12 to 0.2 to avoid having scans 
+        hitting the robot itself
+     7) Change height of camera
+
+I added comments in the model.sdf next to where stuff was changed
