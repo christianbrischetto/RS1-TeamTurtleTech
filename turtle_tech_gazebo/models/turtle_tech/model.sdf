@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <sdf version='1.7'>
   <model name='turtle_tech'>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Door_4'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Door_4'>
       <pose>-6.70699 -4.24808 0 0 -0 0</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -79,7 +79,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Door_5'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Door_5'>
       <pose>-5.75864 -4.24808 0 0 -0 0</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -157,7 +157,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Door_6'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Door_6'>
       <pose>-4.81028 -4.24808 0 0 -0 0</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -235,7 +235,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Door_7'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Door_7'>
       <pose>-4.02384 -4.24808 0 0 -0 0</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -313,7 +313,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_101'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_101'>
       <pose>-8.17687 -2.575 0 0 -0 3.14159</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -395,7 +395,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_103'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_103'>
       <pose>-3.55187 -1.15 0 0 -0 1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -477,7 +477,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_105'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_105'>
       <pose>-3.55187 3.98061 0 0 -0 1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -559,7 +559,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_107'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_107'>
       <pose>6 -4.925 0 0 -0 3.14159</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -641,7 +641,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_111'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_111'>
       <pose>6.02313 1.425 0 0 -0 0</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -723,7 +723,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_115'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_115'>
       <pose>3.59433 1.85421 0 0 -0 1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -805,7 +805,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_117'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_117'>
       <pose>3.59813 4.18435 0 0 -0 1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -887,7 +887,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_119'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_119'>
       <pose>3.59813 0.5 0 0 0 -1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -969,7 +969,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_121'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_121'>
       <pose>3.59813 -3.725 0 0 0 -1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -1051,7 +1051,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_124'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_124'>
       <pose>-4.41706 -4.50321 0 0 -0 1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -1133,7 +1133,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_126'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_126'>
       <pose>-5.31916 -4.54947 0 0 -0 1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -1215,7 +1215,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_128'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_128'>
       <pose>-6.19812 -4.54947 0 0 -0 1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -1297,7 +1297,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_132'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_132'>
       <pose>-7.21587 -4.50321 0 0 -0 1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -1379,7 +1379,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_136'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_136'>
       <pose>-1.24771 0.195787 -0.780431 0 0 -1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -1473,7 +1473,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_139'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_139'>
       <pose>-1.20187 3.4 -0.830715 0 -0 1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -1567,7 +1567,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_146'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_146'>
       <pose>1.19813 0.2 -0.753077 0 0 -1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -1661,7 +1661,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_149'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_149'>
       <pose>1.11463 3.43764 -0.851549 0 -0 1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -1755,7 +1755,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_152'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_152'>
       <pose>1.19813 -3.25 -0.702796 0 0 -1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -1849,7 +1849,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_154'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_154'>
       <pose>-2.0269 -4.925 0 0 -0 0</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -1943,7 +1943,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_156'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_156'>
       <pose>1.5899 -4.925 0 0 -0 0</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -2025,7 +2025,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_90'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_90'>
       <pose>-8.425 0 0 0 0 -1.57549</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -2107,7 +2107,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_94'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_94'>
       <pose>8.425 0 0 0 -0 1.5661</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -2189,7 +2189,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_95'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_95'>
       <pose>0.023131 4.925 0 0 -0 3.14159</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -2271,7 +2271,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_97'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_97'>
       <pose>-6 -4.925 0 0 -0 0</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -2353,7 +2353,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_98'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_98'>
       <pose>-3.55187 -3.75 0 0 -0 1.5708</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -2435,7 +2435,7 @@
         </surface>
       </collision>
     </link>
-    <link name='turtle_tech::turtle_tech::turtle_tech::Wall_99'>
+    <link name='turtle_tech::turtle_tech::turtle_tech::turtle_tech::Wall_99'>
       <pose>-5.10187 -2.575 0 0 -0 3.14159</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
@@ -2673,7 +2673,7 @@
       </link>
       <static>0</static>
       <allow_auto_disable>1</allow_auto_disable>
-      <pose>-4.23849 1.55656 0 0 -0 1.49933</pose>
+      <pose>-4.18222 1.55828 -0.10717 0 -0 1.49933</pose>
     </model>
     <model name='blue_guy_0'>
       <link name='link'>
@@ -2831,7 +2831,7 @@
       </link>
       <static>0</static>
       <allow_auto_disable>1</allow_auto_disable>
-      <pose>4.0959 -1.53724 0 0 0 -1.5751</pose>
+      <pose>4.0959 -1.53724 -0.09382 0 0 -1.5751</pose>
     </model>
     <model name='bookshelf'>
       <static>1</static>
@@ -3681,7 +3681,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>-4.3576 3.50589 0.249468 1.35743 -0 0</pose>
+      <pose>-4.28157 4.51007 0.251093 1.35743 -0 0</pose>
     </model>
     <model name='cafe_table_0'>
       <static>1</static>
@@ -3839,7 +3839,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>-7.70608 -0.313138 0.290909 0 1.3812 0</pose>
+      <pose>-7.70916 -0.313138 0.006365 0 0.010817 0</pose>
     </model>
     <model name='first_2015_trash_can'>
       <link name='link'>
@@ -3980,7 +3980,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>5.25558 2.07428 0.213754 -1.52649 -0.024963 0.512811</pose>
+      <pose>5.25558 2.07803 0.14016 -1.52649 -0.024963 0.512811</pose>
     </model>
     <model name='red_guy'>
       <link name='link'>
@@ -4138,7 +4138,7 @@
       </link>
       <static>0</static>
       <allow_auto_disable>1</allow_auto_disable>
-      <pose>-1.41843 -2.89754 0.038543 -1.56894 -0 2.41947</pose>
+      <pose>-1.74206 -3.26496 -0.155511 0.008116 -0 2.41947</pose>
     </model>
     <model name='red_guy_0'>
       <link name='link'>
@@ -4296,7 +4296,7 @@
       </link>
       <static>0</static>
       <allow_auto_disable>1</allow_auto_disable>
-      <pose>2.34676 1.17542 0.054539 -1.57035 0 0</pose>
+      <pose>2.32935 2.14326 -0.104702 -0.001856 0 0</pose>
     </model>
     <model name='table'>
       <static>1</static>
