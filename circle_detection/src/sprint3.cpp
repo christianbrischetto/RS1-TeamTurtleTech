@@ -33,20 +33,40 @@ public:
         // can open rviz, select add new, marker, select topic below
         marker_pub_ = this->create_publisher<visualization_msgs::msg::Marker>("visualization_marker", 10);
 
+        publisher_ = this->create_publisher<geometry_msgs::msg::Point>("point_topic", 10);
     }
 
 private:
+    void publishPoint(double x, double y) {
+        // Create a Point message
+        geometry_msgs::msg::Point point_msg;
+        point_msg.x = x;  // Example x coordinate
+        point_msg.y = y;  // Example y coordinate
+        point_msg.z = 0.0;  // Optional: for 2D points, z can be 0
+
+        RCLCPP_INFO(this->get_logger(), "Publishing point: x=%.2f, y=%.2f", point_msg.x, point_msg.y);
+
+        // Publish the point
+        publisher_->publish(point_msg);
+    }
+
     void scanCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg) 
     {
         laserScan_ = *msg;
+
         if(odom_found_){
             std::vector<std::pair<double, double>> circle_centers = getCircle(odom_);
             
             std::cout << "\n---------- FOUND CIRCLES ----------" << std::endl;
-            for(auto circle : circle_centers){
+            for(auto circle : circle_centers)
+            {
                 std::cout << "x: " << circle.first << ", y: " << circle.second << std::endl;
             }
-        publishCircleCenters(circle_centers);
+    
+            publishCircleCenters(circle_centers);
+            if (!circle_centers.empty()) {
+                publishPoint(circle_centers[0].first, circle_centers[0].second);
+            }
         }
     }
 
@@ -284,6 +304,7 @@ private:
     }
 
     rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr marker_pub_;
+    rclcpp::Publisher<geometry_msgs::msg::Point>::SharedPtr publisher_;
 
 };
 
