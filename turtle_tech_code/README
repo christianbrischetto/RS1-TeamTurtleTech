@@ -13,7 +13,7 @@ Then run the following command to launch the project:
 ros2 launch sprint_04 turtle_tech_launch.py
 
 ** Progress
-At this point in time 3:05pm 25/10/2024 the combined launch file does the following:
+At this point in time the combined launch file does the following:
 - Sets the turtlebot type (export TURTLEBOT3_MODEL=waffle_pi)
 - Starts SLAM Toolbox (ros2 launch slam_toolbox online_async_launch.py)
 - Runs the project world (ros2 launch turtlebot3_gazebo turtle_tech.launch.py)
