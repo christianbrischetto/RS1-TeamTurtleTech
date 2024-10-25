@@ -12,14 +12,16 @@ source install/setup.bash
 Then run the following command to launch the project:
 ros2 launch sprint_04 turtle_tech_launch.py
 
-** TODO
+** Progress
 At this point in time 3:05pm 25/10/2024 the combined launch file does the following:
 - Sets the turtlebot type (export TURTLEBOT3_MODEL=waffle_pi)
+- Starts SLAM Toolbox (ros2 launch slam_toolbox online_async_launch.py)
 - Runs the project world (ros2 launch turtlebot3_gazebo turtle_tech.launch.py)
+- Starts rviz (ros2 run rviz2 rviz2 -d /opt/ros/humble/share/nav2_bringup/rviz/nav2_default_view.rviz)
+- Starts Frontier Exploration (ros2 run autonomous_exploration control)
 - Runs the Person Detection Node (ros2 run sprint_04 rgbDetect)
 
 The following commands/executables are yet to be added (please add if I've missed anything)
-- Starts SLAM Toolbox (ros2 launch slam_toolbox online_async_launch.py)
-- Starts nav2 (ros2 launch nav2_bringup & navigation_launch.py use_sim_time:=True)
-- Starts rviz (ros2 run rviz2 rviz2 -d /opt/ros/humble/share/nav2_bringup/rviz/nav2_default_view.rviz)
-- Starts Frontier Exploration (ros2 run autonomous_exploration control)
+- All commands/executables are implemented!
+
+
