@@ -1,0 +1,24 @@
+Turtle Tech Project Code
+
+** TO RUN
+Move sprint_04 folder into ros2_ws/src
+
+Run the following commands in order:
+
+cd ros2_ws
+colcon build --packages-select sprint_04
+source install/setup.bash
+
+Then run the following command to launch the project:
+ros2 launch sprint_04 turtle_tech_launch.py
+
+** TODO
+At this point in time 3:05pm 25/10/2024 the combined launch file does the following:
+- Sets the turtlebot type (export TURTLEBOT3_MODEL=waffle_pi)
+- Runs the project world (ros2 launch turtlebot3_gazebo turtle_tech.launch.py)
+- Runs the Person Detection Node (ros2 run sprint_04 rgbDetect)
+
+The following commands/executables are yet to be added (please add if I've missed anything)
+- Starts SLAM Toolbox
+- Starts Frontier Exploration
+- Starts Rviz?
