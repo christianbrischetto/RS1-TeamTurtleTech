@@ -13,6 +13,9 @@
 #include <eigen3/Eigen/Geometry>
 #include <cmath>
 #include <visualization_msgs/msg/marker.hpp>
+#include <chrono>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
 
 class sprint3 : public rclcpp::Node
 {
@@ -28,12 +31,15 @@ public:
         cylinder_diameter_ = 0.3;
         odom_found_ = false;
         radius_tolerance = 0.2;
+        goalReceived = false;
 
         // for testing purposes 
         // can open rviz, select add new, marker, select topic below
         marker_pub_ = this->create_publisher<visualization_msgs::msg::Marker>("visualization_marker", 10);
 
         publisher_ = this->create_publisher<geometry_msgs::msg::Point>("point_topic", 10);
+
+        vel_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 1);
     }
 
 private:
@@ -44,7 +50,7 @@ private:
         point_msg.y = y;  // Example y coordinate
         point_msg.z = 0.0;  // Optional: for 2D points, z can be 0
 
-        RCLCPP_INFO(this->get_logger(), "Publishing point: x=%.2f, y=%.2f", point_msg.x, point_msg.y);
+        // RCLCPP_INFO(this->get_logger(), "Publishing point: x=%.2f, y=%.2f", point_msg.x, point_msg.y);
 
         // Publish the point
         publisher_->publish(point_msg);
@@ -56,16 +62,15 @@ private:
 
         if(odom_found_){
             std::vector<std::pair<double, double>> circle_centers = getCircle(odom_);
-            
-            std::cout << "\n---------- FOUND CIRCLES ----------" << std::endl;
-            for(auto circle : circle_centers)
-            {
-                std::cout << "x: " << circle.first << ", y: " << circle.second << std::endl;
-            }
     
             publishCircleCenters(circle_centers);
-            if (!circle_centers.empty()) {
+            if (!circle_centers.empty() && !goalReceived) {
                 publishPoint(circle_centers[0].first, circle_centers[0].second);
+
+                // std::cout << "x: " << circle_centers[0].first << ", y: " << circle_centers[0].second << std::endl;
+
+                goal = circle_centers[0];
+                goalReceived = true;
             }
         }
     }
@@ -261,16 +266,6 @@ private:
         return true;
     }
 
-    rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr scan_subscriber_;
-    rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_subscription_;
-
-    nav_msgs::msg::Odometry odom_;
-    sensor_msgs::msg::LaserScan laserScan_;
-
-    bool odom_found_;
-    double cylinder_diameter_;
-    double radius_tolerance; // Allowable deviation from the target radius
-
     void publishCircleCenters(const std::vector<std::pair<double, double>>& circle_centers) {
         auto marker = visualization_msgs::msg::Marker();
         marker.header.frame_id = "map";  // Ensure the frame matches your system
@@ -303,15 +298,221 @@ private:
         marker_pub_->publish(marker);
     }
 
+public:
+    void run(){
+
+        std::pair<double, double> pointC;
+        bool turning = true;
+        bool driving = true;
+        bool circleMotion = true;
+        bool circleDriving = true;
+        bool circleturning = true;
+        bool complete = false;
+        double v = 0.2;
+        double minTurnError = 0.1;
+
+        // Time for one full circle: 2π radians divided by angular velocity
+        std::chrono::steady_clock::time_point start_time;
+    
+        publishVel(0.0, 0.0);
+
+        while(true){
+            
+            while(goalReceived){
+
+                double goalYaw = calculateYaw(odom_);
+                pointC = calculatePointC(goal);
+
+                RCLCPP_ERROR(this->get_logger(), "[CIRCLE DETECTION] TURNING TOWARDS THE CIRCLE");
+
+                while(turning){
+                    calcError(pointC, goalYaw, odom_);
+                    publishVel(0.0, errorYaw_);
+
+                    if(errorYaw_ < minTurnError){
+                        publishVel(0.0, 0.0);
+                        std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(10)));
+                        turning = false;
+                    }
+                }
+
+                RCLCPP_ERROR(this->get_logger(), "[CIRCLE DETECTION] DRIVING TOWARDS THE CIRCLE");
+
+                while(driving){
+                    calcError(pointC, goalYaw, odom_);
+                    publishVel(v, errorYaw_);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(10)));
+                    if(errorDist_ < 0.1){
+                        publishVel(0.0, 0.0);
+                        driving = false;
+                    }
+                }
+
+                // circling (hard coded)
+                double circleYaw = goalYaw + 1.75; // 100 degress ISH
+                circleYaw = normalizeAngle(circleYaw);
+
+                RCLCPP_ERROR(this->get_logger(), "[CIRCLE DETECTION] CIRCLING THE CIRCLE");
+
+                while(circleMotion){
+                    while(circleturning){
+                        calcError(pointC, circleYaw, odom_);
+                        publishVel(0.0, errorYaw_); // spins to quick, error to large
+                        std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(10)));
+
+                        // std::cout << "Yaw Error = " << errorYaw_ << std::endl;
+
+                        if(errorYaw_ < 0.01 && errorYaw_ > -0.01){
+                            publishVel(0.0, 0.0);                            
+                            circleturning = false;
+                            start_time = std::chrono::steady_clock::now();
+                        }
+                    }
+                    
+                    while(circleDriving){
+                        goalYaw = calculateYaw(odom_) + 1.4; // add 90 degress to make perpendicular
+                        goalYaw = normalizeAngle(goalYaw);
+                        calcError(goal, goalYaw, odom_);
+                        publishVel(v, errorYaw_*2);
+
+                        // std::cout << "goalYaw = " << goalYaw << ",  errorYaw = " << errorYaw_ << std::endl;
+
+                        std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(10)));
+
+                        auto current_time = std::chrono::steady_clock::now();
+                        std::chrono::duration<double> elapsed_seconds = current_time - start_time;
+                        
+                        if(elapsed_seconds.count() >= 40){
+                            circleDriving = false; // Toggle circleDriving
+                            RCLCPP_INFO(this->get_logger(), "[CIRCLE DETECTION] ERROR: CIRCLE PATH INCOMPLETE, TIMED OUT");
+                        }
+                        if(elapsed_seconds.count() > 10 && (goalYaw > circleYaw - 0.05 && goalYaw < circleYaw + 0.05)){
+                            circleDriving = false; // Toggle circleDriving
+                            RCLCPP_INFO(this->get_logger(), "[CIRCLE DETECTION] CIRCLE PATH COMPLETED");
+                        }
+                    }
+                    
+                    publishVel(0, 0);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(10)));
+                    circleMotion = false;
+                }
+
+                //publish goal to indicate finished
+                publishPoint(99.0, 99.0);
+                goalReceived = false;
+                complete = true;
+            }
+
+            if(complete){
+                // rclcpp::shutdown();
+                return;
+            }
+        }
+    }
+
+    std::pair<double, double> calculatePointC(std::pair<double, double> circle_center)
+    {
+        std::pair<double, double> point_c;
+        double desired_dist = drivingCircleRad;
+        double theta = atan2(odom_.pose.pose.position.y - circle_center.second, odom_.pose.pose.position.x - circle_center.first);
+        point_c.first = circle_center.first + desired_dist * cos(theta);
+        point_c.second = circle_center.second + desired_dist * sin(theta);
+        return point_c;
+    }
+
+private:
+    double calculateYaw(nav_msgs::msg::Odometry odom){
+        double x1 = odom.pose.pose.position.x;
+        double y1 = odom.pose.pose.position.y;
+        double x2 = goal.first;
+        double y2 = goal.second;
+        double rad_180deg_ = 3.14159;
+
+        // calculate where to look 
+        double goalYaw = atan((y2-y1)/(x2-x1));
+
+        if((x2 < x1) && (y2 > y1)){ // bottom left
+            goalYaw = goalYaw + rad_180deg_;
+        }
+        else if((x2 < x1) && (y2 < y1)){ // bottom right
+            goalYaw = goalYaw - rad_180deg_;
+        }
+        return goalYaw;
+    }
+
+    void publishVel(double linear, double angular){
+        geometry_msgs::msg::Twist twist_msg;
+        twist_msg.linear.x = linear;
+        twist_msg.angular.z = angular;
+        vel_publisher_->publish(twist_msg);
+    }
+
+    void calcError(std::pair<double, double> goal, double goalYaw, nav_msgs::msg::Odometry odom_){
+        // Extract position data
+        double currentX = odom_.pose.pose.position.x;
+        double currentY = odom_.pose.pose.position.y;
+
+        // Extract and convert orientation (quaternion) to yaw
+        tf2::Quaternion q(
+            odom_.pose.pose.orientation.x,
+            odom_.pose.pose.orientation.y,
+            odom_.pose.pose.orientation.z,
+            odom_.pose.pose.orientation.w
+        );
+        tf2::Matrix3x3 m(q);
+        double roll, pitch, yaw;
+        m.getRPY(roll, pitch, yaw);
+
+        // Set the current yaw angle
+        double currentYaw = yaw;
+        // error in yaw
+        errorYaw_ = goalYaw - currentYaw;
+        errorYaw_ = normalizeAngle(errorYaw_);
+
+        // error in distance
+        errorDist_ = std::sqrt(std::pow(goal.first - currentX, 2) + std::pow(goal.second - currentY, 2));
+    }
+
+    double normalizeAngle(double angle)
+    {
+        while (angle > M_PI)
+            angle -= 2.0 * M_PI;
+        while (angle < -M_PI)
+            angle += 2.0 * M_PI;
+        return angle;
+    }
+
+    rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr scan_subscriber_;
+    rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_subscription_;
+
+    nav_msgs::msg::Odometry odom_;
+    sensor_msgs::msg::LaserScan laserScan_;
+
+    bool odom_found_;
+    double cylinder_diameter_;
+    double radius_tolerance; // Allowable deviation from the target radius
+
     rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr marker_pub_;
     rclcpp::Publisher<geometry_msgs::msg::Point>::SharedPtr publisher_;
+    rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_publisher_;
 
+    std::pair<double, double> goal;
+    bool goalReceived;
+    double errorYaw_;
+    double errorDist_;
+    const double drivingCircleRad = 0.5;
 };
 
 int main(int argc, char **argv)
 {
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<sprint3>());
+    // rclcpp::spin(std::make_shared<sprint3>());
+    // rclcpp::shutdown();
+
+    auto node = std::make_shared<sprint3>();  // Create a shared pointer to sprint3 node
+    std::thread spin_thread([node]() { rclcpp::spin(node); }); // Spin in a separate thread
+    node->run();  // Run the main logic
+    spin_thread.join();
     rclcpp::shutdown();
     return 0;
 }
