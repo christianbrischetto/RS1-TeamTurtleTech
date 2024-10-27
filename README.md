@@ -1,11 +1,5 @@
 # RS1-TeamTurtleTech
 
-## Install frontier exploration package ##
-
-git clone https://github.com/abdulkadrtr/ROS2-FrontierBaseExplorationForAutonomousRobot.git
-
-
-
 ## To use the Turtle Tech Gazebo World, ensure you put the following files in the relevant directories: ##
 
 ### Launch File (turtle_tech.launch.py):
