@@ -244,11 +244,25 @@ private:
         odom_ = *msg;
 
         // Call the detectBlue function to process and get the result image
-        cv::Mat result_image = detectBlue();
+        cv::Mat result_image_blue = detectBlue();
+        cv::Mat result_image_red = detectRed();
 
         // Show the result image with bounding boxes
-        if (!result_image.empty()) {
-            cv::imshow("RGB Image with Blue Detection", result_image);
+        if (!result_image_blue.empty()) {
+            cv::imshow("RGB Image with Blue Detection", result_image_blue);
+
+            // Normalize the depth image to a range from 0 to 255 (8-bit image) for viewing
+            cv::Mat scaled_depth_image;
+            double minVal, maxVal;
+            cv::minMaxLoc(depth_image_, &minVal, &maxVal);
+            depth_image_.convertTo(scaled_depth_image, CV_8UC1, 255.0 / maxVal);
+
+            cv::imshow("Scaled Depth Image", scaled_depth_image);
+        }
+
+        // Show the result image with bounding boxes
+        if (!result_image_red.empty()) {
+            cv::imshow("RGB Image with Red Detection", result_image_red);
 
             // Normalize the depth image to a range from 0 to 255 (8-bit image) for viewing
             cv::Mat scaled_depth_image;
