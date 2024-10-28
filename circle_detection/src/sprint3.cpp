@@ -98,6 +98,31 @@ private:
             }
         }
 
+        // List of (x, y) points to discard within a certain distance
+        std::vector<std::pair<double, double>> discard_points = {
+            {-1.2, -0.7},
+            {-1.2, 1.0},
+            {-1.2, 2.5},
+            {-1.2, 4.3},
+            {1.2, 2.5},
+            {1.2, 2.5},
+            {1.2, 1.0},
+            {1.2, -0.7},
+            {-1.2, -2.3},
+            {-1.2, -4.2},
+            {3.2, -4.5},
+            {-2, -1.6},
+            {-2.7, 3},
+            {-2.7, 4.5},
+            {-0.7, -2.4},
+            {0.13, -1.9},
+            {0.7, -0.3},
+            {0.5, 0.7},
+            {1.8, 4}
+        };
+        // Distance threshold
+        const double threshold = 0.5;
+
     // transform into world coords
         for(auto circle : circle_centers){
             Eigen::Vector3d local_point(circle.first, circle.second, 0);      
@@ -111,7 +136,23 @@ private:
             Eigen::Vector3d world_point = rotation_matrix * local_point + translation;
             double x = world_point.x();
             double y = world_point.y();
-            circle_centers_world.push_back({x, y});
+
+            bool discard = false;
+
+            for (const auto& point : discard_points) {
+                double dx = x - point.first;
+                double dy = y - point.second;
+                double distance = std::sqrt(dx * dx + dy * dy);
+                
+                if (distance <= threshold) {
+                    discard = true;
+                    break;
+                }
+            }
+
+            if(!discard){
+                circle_centers_world.push_back({x, y});
+            }
         }
         
         return circle_centers_world;
@@ -311,9 +352,7 @@ public:
         bool circleDriving = true;
         bool circleturning = true;
         double v = 0.2;
-        double minTurnError = 0.1;
-
-        // Time for one full circle: 2π radians divided by angular velocity
+        double minTurnError = 0.01;
         std::chrono::steady_clock::time_point start_time;
     
         publishVel(0.0, 0.0);
