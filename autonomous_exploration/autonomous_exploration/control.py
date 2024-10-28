@@ -17,7 +17,7 @@ first_valid_flag = False  # This keeps track of whether we've received a valid p
 firstprint = True
 circlefinished = False
 
-with open("src/autonomous_exploration/config/params.yaml", 'r') as file:
+with open("src/RS1-TeamTurtleTech/autonomous_exploration/config/params.yaml", 'r') as file:
     params = yaml.load(file, Loader=yaml.FullLoader)
 
 lookahead_distance = params["lookahead_distance"]
