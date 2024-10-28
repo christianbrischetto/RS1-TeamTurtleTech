@@ -30,8 +30,9 @@ public:
 
         cylinder_diameter_ = 0.3;
         odom_found_ = false;
-        radius_tolerance = 0.2;
+        radius_tolerance = 0.1;
         goalReceived = false;
+        complete = false;
 
         // for testing purposes 
         // can open rviz, select add new, marker, select topic below
@@ -53,7 +54,9 @@ private:
         // RCLCPP_INFO(this->get_logger(), "Publishing point: x=%.2f, y=%.2f", point_msg.x, point_msg.y);
 
         // Publish the point
-        publisher_->publish(point_msg);
+        if(!complete){
+            publisher_->publish(point_msg);
+        }
     }
 
     void scanCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg) 
@@ -307,7 +310,6 @@ public:
         bool circleMotion = true;
         bool circleDriving = true;
         bool circleturning = true;
-        bool complete = false;
         double v = 0.2;
         double minTurnError = 0.1;
 
@@ -501,6 +503,8 @@ private:
     double errorYaw_;
     double errorDist_;
     const double drivingCircleRad = 0.5;
+    bool complete;
+
 };
 
 int main(int argc, char **argv)

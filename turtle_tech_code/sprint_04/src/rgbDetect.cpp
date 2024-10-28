@@ -35,13 +35,29 @@ private:
         try
         {
             std::lock_guard<std::mutex> lock(image_mutex_); // Ensure thread-safe access
-            rgb_image_ = cv_bridge::toCvCopy(msg, "bgr8")->image;
+
+            // Convert the ROS image message to an OpenCV image
+            cv::Mat input_image = cv_bridge::toCvCopy(msg, "bgr8")->image;
+
+            // Apply a Gaussian blur to the image
+
+
+            //BLLUR MUST BE ODD NUMBER 3 5 7 9 ect
+            int blur_kernel_size = 7; // Adjust this value to control the blur level (must be an odd number)
+            //BLLUR MUST BE ODD 3 5 7 9 ect
+            
+            cv::Mat blurred_image;
+            cv::GaussianBlur(input_image, blurred_image, cv::Size(blur_kernel_size, blur_kernel_size), 0);
+
+            // Save the blurred image to rgb_image_
+            rgb_image_ = blurred_image;
         }
         catch (cv_bridge::Exception &e)
         {
             RCLCPP_ERROR(this->get_logger(), "Could not convert RGB image: %s", e.what());
         }
     }
+
 
     void depth_callback(const sensor_msgs::msg::Image::SharedPtr msg)
     {
