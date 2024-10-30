@@ -352,7 +352,7 @@ public:
         bool circleDriving = true;
         bool circleturning = true;
         double v = 0.2;
-        double minTurnError = 0.01;
+        double minTurnError = 0.05;
         std::chrono::steady_clock::time_point start_time;
     
         publishVel(0.0, 0.0);
@@ -369,10 +369,10 @@ public:
                 while(turning){
                     calcError(pointC, goalYaw, odom_);
                     publishVel(0.0, errorYaw_);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(10)));
 
                     if(errorYaw_ < minTurnError){
                         publishVel(0.0, 0.0);
-                        std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(10)));
                         turning = false;
                     }
                 }
@@ -380,6 +380,7 @@ public:
                 RCLCPP_ERROR(this->get_logger(), "[CIRCLE DETECTION] DRIVING TOWARDS THE CIRCLE");
 
                 while(driving){
+                    goalYaw = calculateYaw(odom_);
                     calcError(pointC, goalYaw, odom_);
                     publishVel(v, errorYaw_);
                     std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(10)));
